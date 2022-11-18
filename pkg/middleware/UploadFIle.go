@@ -52,9 +52,6 @@ func UploadFile(next http.HandlerFunc) http.HandlerFunc {
 		// 
 		data := tempFile.Name()
 
-		filename := data[8:] // split uploads/
-		fmt.Println(data)
-		fmt.Println(filename)
 
 		// add filename to ctx
 		ctx := context.WithValue(r.Context(), "dataFile", data)
