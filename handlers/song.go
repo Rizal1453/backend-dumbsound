@@ -81,20 +81,26 @@ func (h *handlerSong)CreateSong(w http.ResponseWriter, r *http.Request){
 	var API_KEY = os.Getenv("API_KEY")
 	var API_SECRET = os.Getenv("API_SECRET")
 	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
+	song, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
 	resp, err := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "dumbSound"});
+	
 	if err != nil {
  	 fmt.Println(err.Error())
 	}
+	music, err := song.Upload.Upload(ctx, fileSong, uploader.UploadParams{Folder: "dumbsound"})
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 
-	song := models.Song{
+	dataMusic := models.Song{
 		Title:    request.Title,
 		Image:    resp.SecureURL,
 		Year:     request.Year,
-		Song:     fileSong,
+		Song:     music.SecureURL,
 		ArtisID : request.ArtisID,
 	}
 
-	data, err := h.SongRepository.CreateSong(song)
+	data, err := h.SongRepository.CreateSong(dataMusic)
 	if err != nil {
 		// w.Header().Set("Content-type", "aplication/json")
 		w.WriteHeader(http.StatusInternalServerError)
