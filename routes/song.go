@@ -15,6 +15,6 @@ func SongRoute(r *mux.Router){
 
 
 	r.HandleFunc("/createsong",middleware.Auth(middleware.UploadFile(middleware.UploadSong(h.CreateSong)))).Methods("POST")
-	r.HandleFunc("/fsong",middleware.Auth(h.FindSong)).Methods("GET")
+	r.HandleFunc("/fsong",h.FindSong).Methods("GET")
 	r.HandleFunc("/song/{id}",middleware.Auth(h.GetSongById)).Methods("GET")
 }
