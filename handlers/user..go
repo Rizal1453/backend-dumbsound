@@ -75,7 +75,7 @@ user := models.User{
   Gender: request.Gender,
   Phone: request.Phone,
   Address: request.Address,
-  Role: "admin",
+  Role: "user",
 }
 data,err := h.UserRepository.CreateUser(user)
 if err != nil{
